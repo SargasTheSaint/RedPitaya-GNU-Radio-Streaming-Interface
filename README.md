@@ -206,6 +206,13 @@ start GNU Radio from the same terminal:
 gnuradio-companion
 ```
 
+## GNU Radio Implementation
+
+Within GNU Radio create two custom Pythom Modules and insert the
+given source code from RP_ADC_Source.py and RP_DAC_Sink.py.
+Now you have the necessary Blocks to send and retrieve data
+to and from the Red Pitaya Board.
+
 ## Trobuleshooting
 
 If import streaming fails, first verify that the native Red Pitaya library
@@ -232,9 +239,10 @@ If no connection to the Red Pitaya can be established, verify that:
 
 The implementation was tested with:
 
-Platform	    GNU Radio / Environment	    Python
-Windows	        Radioconda	                3.12.9
-Ubuntu Linux	GNU Radio                   3.10.9.2	3.12.3
+|Platform|GNU Radio / Environment|Python|
+|--------|-----------------------|------|
+|Windows |Radioconda             |3.12.9|
+|Ubuntu Linux|GNU Radio 3.10.9.2 |3.12.3|
 
 
 Other versions may also work, provided that the native Red Pitaya Python binding
