@@ -149,3 +149,96 @@ Stream Control application and extract it, for example to
 The native Red Pitaya Python library must match the Python version used by GNU
 Radio.
 For Python 3.12, the relevant files may for example be named
+
+```bash
+streaming.py
+_python_lib3_12.so
+```
+
+where 3_12 indicates Python 3.12.
+Determine the user-specific Python package directory:
+
+```bash
+python3 -m site --user-site
+```
+
+For Python 3.12 this may return something similar to
+
+```bash
+/home/user/.local/lib/python3.12/site-packages
+```
+
+Create
+
+```bash
+redpitaya_local.pth
+```
+
+inside this directory and add the paths to the Red Pitaya streaming library and
+this repository:
+
+```bash
+/home/user/RedPitaya/StreamingClient/python_lib
+/home/user/RedPitaya/GNUradio
+```
+
+Verify the installation:
+
+```bash
+python3 -c "import streaming; import rp_shared_dual; print(streaming.__file__); print(rp_shared_dual.__file__)"
+```
+
+Then test all required modules:
+
+```bash
+python3 -c "import numpy; import gnuradio; import streaming; import rp_shared_dual; print('ALL IMPORTS OK')"
+```
+
+If the command prints
+
+```bash
+ALL IMPORTS OK
+```
+
+start GNU Radio from the same terminal:
+
+```bash
+gnuradio-companion
+```
+
+## Trobuleshooting
+
+If import streaming fails, first verify that the native Red Pitaya library
+matches both the operating system and the Python major/minor version.
+Examples:
+
+```bash
+Python 3.12 on Windows -> corresponding Python 3.12 .pyd library
+Python 3.12 on Linux   -> _python_lib3_12.so
+```
+
+If import rp_shared_dual fails, verify that the repository directory is
+included in redpitaya_local.pth.
+If GNU Radio starts but the Embedded Python Blocks cannot import the modules,
+launch gnuradio-companion from the same terminal environment in which the
+previous import tests succeeded.
+If no connection to the Red Pitaya can be established, verify that:
+- the correct Red Pitaya IP address is configured,
+- the Data Stream Control application is active on the board,
+- the Streaming Client was downloaded from the same Red Pitaya software version,
+- host and Red Pitaya are reachable over the network.
+
+## Tested Environment
+
+The implementation was tested with:
+
+Platform	    GNU Radio / Environment	    Python
+Windows	        Radioconda	                3.12.9
+Ubuntu Linux	GNU Radio                   3.10.9.2	3.12.3
+
+
+Other versions may also work, provided that the native Red Pitaya Python binding
+matches the Python interpreter used by GNU Radio.
+
+
+
